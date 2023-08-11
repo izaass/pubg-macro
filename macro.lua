@@ -234,7 +234,7 @@ function recoil_value(_weapon, _duration)
     end
 
     local weapon_recoil = recoil_table[_weapon][_mode][step]
-     OutputLogMessage("weapon_recoil = %s\n", weapon_recoil)
+     --OutputLogMessage("weapon_recoil = %s\n", weapon_recoil)
 
     local weapon_speed = recoil_table[_weapon]["speed"]
     local weapon_clickspeed = recoil_table[_weapon]["clickspeed"]
@@ -253,7 +253,7 @@ function recoil_value(_weapon, _duration)
         local coefficient = interval_ratio * (1 + random_seed * math.random())
         weapon_intervals = math.floor(coefficient * weapon_speed)
     end
-    OutputLogMessage("weapon_intervals = %s\n", weapon_intervals)
+    --OutputLogMessage("weapon_intervals = %s\n", weapon_intervals)
 
     recoil_recovery = weapon_recoil
     recoil_times = all_recoil_times * 0.7 / vertical_sensitivity
@@ -302,27 +302,15 @@ end
 
 
 function ghi_log(weapon_key)
-    local weapons = {
-        [beryl_key] = "Beryl",
-        [ump9_key] = "UMP9",
-        [akm_key] = "AKM",
-        [m16a4_key] = "M16A4",
-        [m416_key] = "M416",
-        [mg3_key] = "MG3",
-        [set_off_key] = "OFF"
-    }
-
-    local weaponName = weapons[weapon_key] or "Unknown"
-
     OutputLogMessage("-----------------------------------------------------------------------------------------------------\n")
     OutputLogMessage(" Current Weapon: "..current_weapon.." | Recoil Mode: "..recoil_mode().."\n")
-    OutputLogMessage("=====> [" .. weaponName .. "] MACRO\n")
+    OutputLogMessage("=====> [" .. current_weapon .. "] MACRO \n")
     OutputLogMessage("-----------------------------------------------------------------------------------------------------\n\n")
 end
 --function thong bao
 
 function OnEvent(event, arg)
-    OutputLogMessage("event = %s, arg = %d\n", event, arg ,current_weapon)
+    --OutputLogMessage("event = %s, arg = %d\n", event, arg ,current_weapon)
     if (event == "PROFILE_ACTIVATED") then
         EnablePrimaryMouseButtonEvents(true)
         Fire = false
@@ -345,31 +333,31 @@ function OnEvent(event, arg)
         ghi_log(set_off_gkey)
         OutputLogMessage("=====> MACRO \t< OFF >\n")
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == akm_key) or (event == "G_PRESSED" and arg == akm_gkey) then
-        current_weapon = "akm"
+        current_weapon = "AKM"
         ghi_log(akm_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == m16a4_key) or (event == "G_PRESSED" and arg == m16a4_gkey) then
-        current_weapon = "m16a4"
+        current_weapon = "M16A4"
         ghi_log(m16a4_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == m416_key) or (event == "G_PRESSED" and arg == m416_gkey) then
-        current_weapon = "m416"
+        current_weapon = "M416"
         ghi_log(m416_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == ump9_key) or (event == "G_PRESSED" and arg == ump9_gkey) then
-        current_weapon = "ump9"
+        current_weapon = "UMP9"
         ghi_log(ump9_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == uzi_key) or (event == "G_PRESSED" and arg == uzi_gkey) then
-        current_weapon = "uzi"
+        current_weapon = "UZI"
         ghi_log(uzi_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == scarl_key) or (event == "G_PRESSED" and arg == scarl_gkey) then
-        current_weapon = "scarl"
+        current_weapon = "SCARL"
         ghi_log(scarl_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == qbz_key) or (event == "G_PRESSED" and arg == qbz_gkey) then
-        current_weapon = "qbz"
+        current_weapon = "QBZ"
         ghi_log(qbz_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == beryl_key) or (event == "G_PRESSED" and arg == beryl_gkey) then
-        current_weapon = "beryl"
+        current_weapon = "BERYL"
         ghi_log(beryl_gkey)
     elseif (event == "MOUSE_BUTTON_PRESSED" and arg == mg3_key) or (event == "G_PRESSED" and arg == mg3_gkey) then
-        current_weapon = "mg3"
+        current_weapon = "MG3"
         ghi_log(mg3_gkey)
     elseif (event == "M_RELEASED" and arg == 3 and Fire) then
         local intervals, recovery, clicktime, bullets = recoil_value(current_weapon, shoot_duration)
